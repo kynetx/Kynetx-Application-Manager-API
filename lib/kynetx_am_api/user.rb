@@ -1,17 +1,40 @@
 module KynetxAmApi
+  #
+  # Simple wrapper to allow access to the OAuth user information.   This also hold some basic user data like
+  # username, name and user id.
+  #
   class User
+    # OAuth Request Token
     attr_accessor :request_token
+    # OAuth Secret Token
     attr_accessor :request_secret
+    # OAuth Verifieer
     attr_accessor :oauth_verifier
+    # OAuth Access Token
     attr_accessor :access_token
+    # OAuth Acces sSecret
     attr_accessor :access_secret
+    # Kynetx User name
     attr_accessor :username
+    # Kynetx User ID
     attr_accessor :userid
+    # Full name of user
     attr_accessor :name
+    # Current Application context.
     attr_reader :current_application
 
-    # attr :api
-    # attr :applications
+
+    #
+    # Accepts a hash that has the following entries.
+    # :request_token
+    # :request_secret
+    # :oauth_verifier
+    # :access_token
+    # :access_secret
+    # :username
+    # :userid
+    # :name
+    #
 
     def initialize(attributes)
       @request_token = attributes[:request_token]
