@@ -1,0 +1,100 @@
+= Kynetx Application Manager API
+
+A ruby api to access the Kynetx Application Manager API.   The Kynetx Application Manager  is a remote service that
+allow Kynetx developers a way to create, update , delete Kynetx KRLrule sets.  This api also provides access to
+many other services like the Kynetx Browser Extention factory.
+
+== Installation
+
+    gem install kynetx_am_api
+
+== Resources
+
+* View Source on GitHub (http://github.com/ciddennis/Kynetx-Application-Manager-API)
+* Report Issues on GitHub (http://github.com/ciddennis/Kynetx-Application-Manager-API/issues)
+* Read More at the Wiki (http://wiki.github.com/ciddennis/Kynetx-Application-Manager-API/)
+
+== Getting Started
+
+Because the Kynetx Application Manager Uses OAuth to protect its resources you as a developer must provide the required
+OAuth tokens for the user account you wish to access.   This is fairly straight forward process.
+
+
+1. First you must provide a way for the Oauth do this by providing two action in a controller.
+
+  def oauth_connect
+    # default where we want to go to our root url.
+    new_page = root_url
+
+    # Get an instance of the Direct Kynetx Api
+    api = KynetxAmApi::DirectApi.new
+
+    # Ask the API for the authorization url.
+    new_page = api.get_authorize_url
+
+    # Get the oauth request token
+    request_token = api.get_request_token
+
+    # Save it as they are needed later
+    session[:request_token] = {:request_token => request_token.token,
+                                 :request_secret => request_token.secret}
+
+    # if we area already authorized to go root url or go to the authorization url
+    redirect_to new_page
+  end
+
+  def authorize
+    raise "Unknown Oauth Request Token" unless session[:request_token]
+
+    rt = session[:request_token]
+
+    # Again setup the Kynext API
+    api = KynetxAmApi::DirectApi.new(rt.merge({:oauth_verifier => params[:oauth_verifier]}))
+
+    # Read the the user information from the oauth session
+    oauth_user = api.get_user_info
+
+
+    # Here are the values you can get back from the oauth user info call
+    # you store them in your own user object or what ever but you do need to track all the tokens for later
+    # api calls.
+    #                     :request_token => oauth_user.request_token,
+    #                     :request_secret => oauth_user.request_secret,
+    #                     :access_token => oauth_user.access_token,
+    #                     :access_secret => oauth_user.access_secret,
+    #                     :username => oauth_user.username,
+    #                     :userid => oauth_user.userid,
+    #                     :name => oauth_user.name
+
+
+    redirect_to root_url
+  end
+
+2.  Once you have authorized the application you can start doing things with the api.  Here are some examples
+
+ Active Record "Like" usages:
+
+        # here attributes is the data you got back from the api.get_user_info above.
+        user = KynetxAmApi::User.new({:request_token => attributes[:request_token],
+            :request_secret => attributes[:request_secret]
+            :oauth_verifier => attributes[:oauth_verifier]
+            :access_token => attributes[:access_token]
+            :access_secret => attributes[:access_secret])
+        user.applications()
+        application = user.create_application("my app nanme","This is the description");
+        # Save ruleset back.
+        application.krl = "krl for ruleset";
+
+ Direct API Calls
+        user = KynetxAmApi::User.new({:request_token => attributes[:request_token],
+            :request_secret => attributes[:request_secret]
+            :oauth_verifier => attributes[:oauth_verifier]
+            :access_token => attributes[:access_token]
+            :access_secret => attributes[:access_secret])
+        user.api.get_applist
+        user.api.get_app_info("ax99x999")
+        
+
+== Copyright
+
+Copyright (c) 2010 Kynetx, Inc. See LICENSE for details.
