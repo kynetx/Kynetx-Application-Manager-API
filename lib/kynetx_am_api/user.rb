@@ -26,14 +26,14 @@ module KynetxAmApi
 
     #
     # Accepts a hash that has the following entries.
-    # :request_token
-    # :request_secret
-    # :oauth_verifier
-    # :access_token
-    # :access_secret
-    # :username
-    # :userid
-    # :name
+    # - :request_token
+    # - :request_secret
+    # - :oauth_verifier
+    # - :access_token
+    # - :access_secret
+    # - :username
+    # - :userid
+    # - :name
     #
 
     def initialize(attributes)
@@ -48,7 +48,9 @@ module KynetxAmApi
       @current_applicaion = nil
     end
 
-
+    #
+    # Returns the direct api to the Kynetx Application Manager.
+    #
     def api
       @api ||= KynetxAmApi::DirectApi.new({:access_token => @access_token, :access_secret => @access_secret})
       return @api
@@ -57,12 +59,12 @@ module KynetxAmApi
     #
     # Read applications list 
     #
-    # :offset => Start in list (not implemented)
-    # :size => Number of application to list (not implemented)
+    # - :offset => Start in list (not implemented)
+    # - :size => Number of application to list (not implemented)
     #
     # Returns a has with two keys
-    # "apps" => Array Off Hashes with :appid , :role, :name, :created
-    # "valid" => true
+    # - "apps" => Array Off Hashes with :appid , :role, :name, :created
+    # - "valid" => true
     #
     def applications(options = {})
       @applications = api.get_applist if !@applications
@@ -70,8 +72,8 @@ module KynetxAmApi
     end
 
     #
-    # :application_id => application_id
-    # :version => Version of application to obtain
+    # - :application_id => application_id
+    # - :version => Version of application to obtain
     #
     def find_application(options = {})
       options[:version] ||= "development"
