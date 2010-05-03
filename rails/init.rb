@@ -1,1 +1,1 @@
-require "kynetx_api_manager"
+require File.dirname(__FILE__) + "/../lib/kynetx_am_api.rb"
