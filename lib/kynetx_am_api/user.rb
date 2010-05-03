@@ -100,7 +100,7 @@ module KynetxAmApi
     
     def duplicate_application(application_id)
       old_app = KynetxAmApi::Application.new(self, application_id)
-      new_app = create_application(old_app.name, "")
+      new_app = create_application(old_app.name || "", "")
       new_app.krl = old_app.krl
       return new_app
     end
