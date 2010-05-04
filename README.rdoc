@@ -2,7 +2,7 @@
 
 A ruby api to access the Kynetx Application Manager API.   The Kynetx Application Manager  is a remote service that
 allow Kynetx developers a way to create, update , delete Kynetx KRLrule sets.  This api also provides access to
-many other services like the Kynetx Browser Extention factory.
+many other services like the Kynetx Browser Extension factory.
 
 == Installation
 
