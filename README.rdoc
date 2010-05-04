@@ -19,7 +19,7 @@ many other services like the Kynetx Browser Extension factory.
 Because the Kynetx Application Manager Uses OAuth to protect its resources you as a developer must provide the required
 OAuth tokens for the user account you wish to access.   This is fairly straight forward process.
 
-1. First you need to acquire your consumer key and secret. To do this, please send an email to support@kynetx.com. 
+1) First you need to acquire your consumer key and secret. To do this, please send an email to support@kynetx.com. 
 Once you have obtained your consumer key and secret you can setup OAuth with the following:
   KynetxAmApi::Oauth.api_server_url = "http://amapi.kynetx.com"
   KynetxAmApi::Oauth.accounts_server_url = "https://accounts.kynetx.com"
@@ -28,7 +28,7 @@ Once you have obtained your consumer key and secret you can setup OAuth with the
 
 You can add the above settings to your Rails development.rb or production.rb files.
 
-2. You must provide a way for the OAuth ceremony to take place. Do this in Rails by providing two actions in a controller.
+2) You must provide a way for the OAuth ceremony to take place. Do this in Rails by providing two actions in a controller.
 
   def oauth_connect
     # default where we want to go to our root url.
@@ -78,7 +78,7 @@ You can add the above settings to your Rails development.rb or production.rb fil
     redirect_to root_url
   end
 
-3.  Once you have authorized the application you can start doing things with the api.  Here are some examples
+3) Once you have authorized the application you can start doing things with the api.  Here are some examples
 
  Active Record "Like" usages:
 
