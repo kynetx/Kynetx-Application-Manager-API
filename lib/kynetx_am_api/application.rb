@@ -174,7 +174,7 @@ module KynetxAmApi
     
     def load_base
       app_details = @api.get_app_details(@application_id)
-      puts "APPDETAILS: #{app_details.inspect}"
+      puts "APPDETAILS: #{app_details.inspect}" if $DEBUG
       @name = app_details["name"]
       @application_id = app_details["appid"]
       @guid = app_details["guid"]
@@ -197,7 +197,7 @@ module KynetxAmApi
   
     def load_versions
       app_info = @api.get_app_info(@application_id)
-      puts "APPINFO: #{app_info.inspect}"
+      puts "APPINFO: #{app_info.inspect}"  if $DEBUG
       @production_version = app_info["production"]["version"] if app_info["production"]
       @development_version = app_info["development"]["version"] if app_info["development"]
       @application_id = app_info["appid"]
@@ -207,7 +207,7 @@ module KynetxAmApi
     def set_krl(krl)
       # ensure that the ruleset_id is correct.
       krl.gsub!(/ruleset.*?\{/m, "ruleset #{@application_id} {")  
-      puts "NEW KRL: #{krl}" 
+      puts "NEW KRL: #{krl}"  if $DEBUG
       response = @api.post_app_source(@application_id, krl, "krl")
       response = JSON.parse(response)
       if response["valid"]

@@ -1,10 +1,8 @@
 module KynetxAmApi
   require 'oauth'
   require 'json'
-  require 'pp'
 
   class Oauth
-
     cattr_accessor :accounts_server_url
     cattr_accessor :api_server_url
     cattr_accessor :consumer_key
@@ -50,14 +48,7 @@ module KynetxAmApi
     private
 
     def get_account_consumer
-#      puts Oauth.consumer_key
-#      puts Oauth.consumer_secret
-#      puts Oauth.accounts_server_url
-
       return @account_consumer if @account_consumer
-
-      # TODO: Accounts url must come form settings.
-
       return @account_consumer = OAuth::Consumer.new(Oauth.consumer_key, Oauth.consumer_secret, {
               :site               => Oauth.accounts_server_url,
               :scheme             => :header,
@@ -74,14 +65,6 @@ module KynetxAmApi
 
     def get_api_consumer
       return @api_consumer if @api_consumer
-
-      # TODO: Accounts url must come form settings.
-
-#      puts Oauth.consumer_key
-#      puts Oauth.consumer_secret
-#      puts Oauth.api_server_url
-
-
       return @api_consumer = OAuth::Consumer.new(Oauth.consumer_key, Oauth.consumer_secret, {
               :site               => Oauth.api_server_url,
               :scheme             => :header,

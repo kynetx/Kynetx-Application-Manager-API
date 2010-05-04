@@ -1,7 +1,7 @@
 = Kynetx Application Manager API
 
 A ruby api to access the Kynetx Application Manager API.   The Kynetx Application Manager  is a remote service that
-allow Kynetx developers a way to create, update , delete Kynetx KRLrule sets.  This api also provides access to
+allow Kynetx developers a way to create, update , delete Kynetx KRL rulesets.  This api also provides access to
 many other services like the Kynetx Browser Extension factory.
 
 == Installation
@@ -19,8 +19,16 @@ many other services like the Kynetx Browser Extension factory.
 Because the Kynetx Application Manager Uses OAuth to protect its resources you as a developer must provide the required
 OAuth tokens for the user account you wish to access.   This is fairly straight forward process.
 
+1. First you need to acquire your consumer key and secret. To do this, please send an email to support@kynetx.com. 
+Once you have obtained your consumer key and secret you can setup OAuth with the following:
+  KynetxAmApi::Oauth.api_server_url = "http://amapi.kynetx.com"
+  KynetxAmApi::Oauth.accounts_server_url = "https://accounts.kynetx.com"
+  KynetxAmApi::Oauth.consumer_key = "XXXXXXXXXXXX"
+  KynetxAmApi::Oauth.consumer_secret= "XXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-1. First you must provide a way for the Oauth do this by providing two action in a controller.
+You can add the above settings to your Rails development.rb or production.rb files.
+
+2. You must provide a way for the OAuth ceremony to take place. Do this in Rails by providing two actions in a controller.
 
   def oauth_connect
     # default where we want to go to our root url.
@@ -44,7 +52,7 @@ OAuth tokens for the user account you wish to access.   This is fairly straight 
   end
 
   def authorize
-    raise "Unknown Oauth Request Token" unless session[:request_token]
+    raise "Unknown OAuth Request Token" unless session[:request_token]
 
     rt = session[:request_token]
 
@@ -70,7 +78,7 @@ OAuth tokens for the user account you wish to access.   This is fairly straight 
     redirect_to root_url
   end
 
-2.  Once you have authorized the application you can start doing things with the api.  Here are some examples
+3.  Once you have authorized the application you can start doing things with the api.  Here are some examples
 
  Active Record "Like" usages:
 
@@ -81,9 +89,11 @@ OAuth tokens for the user account you wish to access.   This is fairly straight 
             :access_token => attributes[:access_token]
             :access_secret => attributes[:access_secret])
         user.applications()
-        application = user.create_application("my app nanme","This is the description");
+
+				# create a new application
+        application = user.create_application("my app name","This is the description")
         # Save ruleset back.
-        application.krl = "krl for ruleset";
+        application.krl = "krl for ruleset"
 
  Direct API Calls
         user = KynetxAmApi::User.new({:request_token => attributes[:request_token],

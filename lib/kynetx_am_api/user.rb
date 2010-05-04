@@ -12,7 +12,7 @@ module KynetxAmApi
     attr_accessor :oauth_verifier
     # OAuth Access Token
     attr_accessor :access_token
-    # OAuth Acces sSecret
+    # OAuth Access Secret
     attr_accessor :access_secret
     # Kynetx User name
     attr_accessor :username
@@ -79,14 +79,11 @@ module KynetxAmApi
       options[:version] ||= "development"
       raise "Expecting :application_id" unless options[:application_id]
       
-      puts "Creating a new Application object."
       if @current_application && @current_application.application_id != options[:application_id]
         @current_application = KynetxAmApi::Application.new(self, options[:application_id], options[:version])
       else
         @current_application ||= KynetxAmApi::Application.new(self, options[:application_id], options[:version])
       end
-      # rst  = api.get_app_source(options[:application_id],options[:version], :krl);
-      # app.source = rst;
       return @current_application
     end
 
@@ -106,9 +103,7 @@ module KynetxAmApi
     end
     
     def owns_current?
-      puts "OWNER / CURRENT_APP: #{@current_application.name}"
       return false unless @current_application
-      puts "ME: #{self.userid.to_i}  OWNER: #{@current_application.owner["kynetxuserid"].to_i}"
       return @current_application.owner["kynetxuserid"].to_i == self.userid.to_i
     end
 

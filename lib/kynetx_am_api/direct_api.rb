@@ -128,13 +128,9 @@ module KynetxAmApi
     end
     
     def post_app_updateappimage(application_id, filename, content_type, image_data)
-      # headers = {'Content-type'=>'multipart/form-data'}
-      # puts "IMAGE INFO: #{image.class}"
-      # return multipart_post_response("app/#{application_id}/updateappimage", {:image => image})
-      response = ""
-      
-      url = URI.parse('https://accounts.kynetx.com/api/0.1/updateAppInfo')
-      
+      # TODO: Make this go through the APIß
+      response = ""      
+      url = URI.parse('https://accounts.kynetx.com/api/0.1/updateAppInfo')      
       StringIO.open(image_data) do |i|
         req = Net::HTTP::Post::Multipart.new url.path,
           "image" => UploadIO.new(i, content_type, filename),
@@ -169,16 +165,16 @@ module KynetxAmApi
         headers = {'Accept'=>'application/json'}
       end
       api_call = "/0.1/#{api_method}"
-      puts "---------GET---------------"
-      puts api_call
-      puts "___________________________"
+      puts "---------GET---------------" if $DEBUG
+      puts api_call  if $DEBUG
+      puts "___________________________"  if $DEBUG
       response = @oauth.get_access_token.get(api_call, headers).body
-      puts response.inspect if RAILS_ENV == 'development'
-      puts "___________________________"
+      puts response.inspect if $DEBUG
+      puts "___________________________"  if $DEBUG
       begin
         response = JSON.parse(response) if format == :json
       rescue
-        puts $!
+        puts $! if $DEBUG
         raise "Unexpected response from the api: (#{api_method}) :: #{response}"
       end
       return response
@@ -193,17 +189,17 @@ module KynetxAmApi
         headers.merge!(additional_headers)
       end
       api_call = "/0.1/#{api_method}"
-      puts "---------POST--------------"
-      puts api_call
-      puts data.inspect if RAILS_ENV == 'development'
+      puts "---------POST--------------"  if $DEBUG
+      puts api_call  if $DEBUG
+      puts data.inspect if $DEBUG
       puts "___________________________"
       response = @oauth.get_access_token.post(api_call, data, headers).body
-      puts response.inspect if RAILS_ENV == 'development'
+      puts response.inspect if $DEBUG
       puts "---------------------------"
       begin
         response = JSON.parse(response) if format == :json
       rescue
-        puts $!
+        puts $! if $DEBUG
         raise "Unexpected response from the api: (#{api_method}) :: #{response}"
       end
       return response
