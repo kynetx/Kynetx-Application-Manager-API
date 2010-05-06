@@ -3,10 +3,6 @@ module KynetxAmApi
   require 'json'
 
   class Oauth
-    cattr_accessor :accounts_server_url
-    cattr_accessor :api_server_url
-    cattr_accessor :consumer_key
-    cattr_accessor :consumer_secret
 
     attr_accessor :request_token
     attr_accessor :account_consumer
@@ -33,6 +29,22 @@ module KynetxAmApi
     end
 
 
+    def self.accounts_server_url=(v)
+      @@accounts_server_url = v
+    end
+    
+    def self.api_server_url=(v)
+      @@api_server_url = v
+    end
+    
+    def self.consumer_key=(v)
+      @@consumer_key = v
+    end
+    
+    def self.consumer_secret=(v)
+      @@consumer_secret = v
+    end
+
     private
 
    
@@ -44,13 +56,10 @@ module KynetxAmApi
 
     end
 
-
-    private
-
     def get_account_consumer
       return @account_consumer if @account_consumer
-      return @account_consumer = OAuth::Consumer.new(Oauth.consumer_key, Oauth.consumer_secret, {
-              :site               => Oauth.accounts_server_url,
+      return @account_consumer = OAuth::Consumer.new(@@consumer_key, @@consumer_secret, {
+              :site               => @@accounts_server_url,
               :scheme             => :header,
               :method             => :get,
               :request_token_path => "/oauth/request_token",
@@ -65,8 +74,8 @@ module KynetxAmApi
 
     def get_api_consumer
       return @api_consumer if @api_consumer
-      return @api_consumer = OAuth::Consumer.new(Oauth.consumer_key, Oauth.consumer_secret, {
-              :site               => Oauth.api_server_url,
+      return @api_consumer = OAuth::Consumer.new(@@consumer_key, @@consumer_secret, {
+              :site               => @@api_server_url,
               :scheme             => :header,
               :method             => :get,
               :request_token_path => "/oauth/request_token",

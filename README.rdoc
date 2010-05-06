@@ -10,9 +10,9 @@ many other services like the Kynetx Browser Extension factory.
 
 == Resources
 
-* View Source on GitHub (http://github.com/ciddennis/Kynetx-Application-Manager-API)
-* Report Issues on GitHub (http://github.com/ciddennis/Kynetx-Application-Manager-API/issues)
-* Read More at the Wiki (http://wiki.github.com/ciddennis/Kynetx-Application-Manager-API/)
+* View Source on GitHub (http://github.com/kynetx/Kynetx-Application-Manager-API)
+* Report Issues on GitHub (http://github.com/kynetx/Kynetx-Application-Manager-API/issues)
+* Read More at the Wiki (http://wiki.github.com/kynetx/Kynetx-Application-Manager-API/)
 
 == Getting Started
 

@@ -1,7 +1,7 @@
 module KynetxAmApi
+  require 'rubygems'
   require 'oauth'
   require 'json'
-  require 'pp'
   require 'net/http/post/multipart'
 
   class DirectApi
@@ -149,7 +149,7 @@ module KynetxAmApi
 
     def get_user_info
       user = @oauth.user
-      if user.username.blank?
+      if user.username.to_s.empty?
         user_info = get_response("userinfo", :json)
         user.username = user_info["username"]
         user.userid = user_info["userid"]
@@ -192,10 +192,10 @@ module KynetxAmApi
       puts "---------POST--------------"  if $DEBUG
       puts api_call  if $DEBUG
       puts data.inspect if $DEBUG
-      puts "___________________________"
+      puts "___________________________" if $DEBUG
       response = @oauth.get_access_token.post(api_call, data, headers).body
       puts response.inspect if $DEBUG
-      puts "---------------------------"
+      puts "---------------------------" if $DEBUG
       begin
         response = JSON.parse(response) if format == :json
       rescue

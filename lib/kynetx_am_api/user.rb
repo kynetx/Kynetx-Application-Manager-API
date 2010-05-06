@@ -106,6 +106,19 @@ module KynetxAmApi
       return false unless @current_application
       return @current_application.owner["kynetxuserid"].to_i == self.userid.to_i
     end
+    
+    def to_h
+      return {
+        :access_secret => @access_secret,
+        :access_token => @access_token,
+        :request_token => @request_token,
+        :request_secret => @request_secret,
+        :oauth_verifier => @oauth_verifier,
+        :name => @name,
+        :userid => @userid,
+        :username => @username
+      }
+    end
 
 
   end

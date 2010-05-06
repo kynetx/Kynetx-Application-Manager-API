@@ -158,9 +158,9 @@ module KynetxAmApi
       options = {
         "extname" => name,
         "extdesc" => description,
-        "extauthor" => author.blank? ? @user.name : author
+        "extauthor" => author.to_s.empty? ? @user.name : author
       }
-      options["appguid"] = @guid if type == :ie
+      options["appguid"] = @guid if type.to_s == "ie"
       return @api.post_app_generate(@application_id, type.to_s, options)
       
     end
@@ -175,6 +175,9 @@ module KynetxAmApi
     def load_base
       app_details = @api.get_app_details(@application_id)
       puts "APPDETAILS: #{app_details.inspect}" if $DEBUG
+      if app_details["error"]
+        raise app_details["error"]
+      end
       @name = app_details["name"]
       @application_id = app_details["appid"]
       @guid = app_details["guid"]
