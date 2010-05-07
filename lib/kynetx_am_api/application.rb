@@ -145,11 +145,11 @@ module KynetxAmApi
       load_base unless @guid
       options = {
         "extname" => name.gsub(/[&'<]/, "_"),
-        "extdatasets" => datasets.to_s,
-        "extversion" => env
+        "datasets" => datasets.to_s,
+        "extauthor" => author,
+        "env" => env,
+        "image_url" => image_url("icard")
       }
-
-      options["image_url"] = image_url("icard")
       
       return @api.post_app_generate(@application_id, "info_card", options)
     end
