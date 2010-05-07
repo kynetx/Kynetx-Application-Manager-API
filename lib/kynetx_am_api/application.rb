@@ -146,7 +146,7 @@ module KynetxAmApi
       options = {
         "extname" => name.gsub(/[&'<]/, "_"),
         "datasets" => datasets.to_s,
-        "extauthor" => author,
+        "extauthor" => "",
         "env" => env,
         "image_url" => image_url("icard")
       }

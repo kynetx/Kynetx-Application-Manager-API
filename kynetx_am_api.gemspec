@@ -2,11 +2,11 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name = %q{kynetx_am_api}
-  s.version = "0.1.23"
+  s.version = "0.1.24"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Farmer, Cid Dennis"]
-  s.date = %q{2010-05-03}
+  s.date = %q{2010-05-07}
   s.email = %q{cid@kynetx.com}
   s.extra_rdoc_files = ["LICENSE"]
   s.homepage = %q{http://www.kynetx.com}
