@@ -26,8 +26,8 @@ KRL
 DEFAULT_DISPATCH = <<-KRL
   dispatch {
     // Some example dispatch domains
-    // www.exmple.com
-    // other.example.com
+    // domain "exmple.com"
+    // domain "other.example.com"
   }
 KRL
 
