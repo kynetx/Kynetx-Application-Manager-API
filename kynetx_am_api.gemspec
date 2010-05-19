@@ -2,14 +2,14 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name = %q{kynetx_am_api}
-  s.version = "0.1.24"
+  s.version = "0.1.25"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Farmer, Cid Dennis"]
-  s.date = %q{2010-05-07}
-  s.email = %q{cid@kynetx.com}
+  s.date = %q{2010-05-19}
+  s.email = %q{oss@kynetx.com}
   s.extra_rdoc_files = ["LICENSE"]
-  s.homepage = %q{http://www.kynetx.com}
+  s.homepage = %q{http://github.com/kynetx/Kynetx-Application-Manager-API}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.description = <<-EOF
     Using this gem you can access the Kynetx Application API.  This api allows developers a way
-    to create,update, delete rulesets.   This gem also helps with the required OAuth communcations with
+    to create, update, delete rulesets.  This gem also helps with the required OAuth communcations with
     the api server.
   EOF
 

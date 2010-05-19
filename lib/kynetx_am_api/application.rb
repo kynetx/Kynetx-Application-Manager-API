@@ -209,7 +209,7 @@ module KynetxAmApi
     
     def set_krl(krl)
       # ensure that the ruleset_id is correct.
-      krl.gsub!(/ruleset.*?\{/m, "ruleset #{@application_id} {")  
+      krl.gsub!(/^ruleset.*?\{/m, "ruleset #{@application_id} {")  
       puts "NEW KRL: #{krl}"  if $DEBUG
       response = @api.post_app_source(@application_id, krl, "krl")
       response = JSON.parse(response)
