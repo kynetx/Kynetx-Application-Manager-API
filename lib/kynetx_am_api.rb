@@ -33,7 +33,7 @@ KRL
 
 DEFAULT_RULE = <<-KRL
   rule <<NAME>> is active {
-    select using "" setting ()
+    select when pageview "" setting ()
     // pre {   }
     // notify("Hello World", "This is a sample rule.");
     noop();
