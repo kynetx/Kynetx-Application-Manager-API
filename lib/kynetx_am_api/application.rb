@@ -180,16 +180,16 @@ module KynetxAmApi
     # opts is a Hash of options that has the following keys:
     # (see Kynetx App Management API documentation on "generate" for more information)
     #
-    # :extname (endpoint name - defaults to app name.)
-    # :extauthor (endpoint author - defaults to user generating the endpoint.) 
-    # :extdesc (endpoint description - defaults to empty.)
-    # :force_build ('Y' or 'N' force a regeneration of the endpoint - defaults to 'N'.)
-    # :contents ( 'compiled' or 'src' specifies whether you want the endpoint or the source code of the endpoint - defaults to 'compiled'.)
-    # :format ('url' or 'json' specifies how the endpoint is returned - default is 'json' which returns a Base64 encoded data string.)
-    # :datasets (used for infocards - defaults to empty)
-    # :env ('dev' or 'prod' specifies whether to run the development or production version of the app - defaults to 'prod'.)
-    # :image_url (a fully qualified url to the image that will be used for the infocard. It must be a 240x160 jpg - defaults to a cropped version of the app image in appBuilder.)
-    # :runtime (specific runtime to be used. This only works with bookmarklets - defaults to init.kobj.net/js/shared/kobj-static.js )
+    # - :extname (endpoint name - defaults to app name.)
+    # - :extauthor (endpoint author - defaults to user generating the endpoint.) 
+    # - :extdesc (endpoint description - defaults to empty.)
+    # - :force_build ('Y' or 'N' force a regeneration of the endpoint - defaults to 'N'.)
+    # - :contents ( 'compiled' or 'src' specifies whether you want the endpoint or the source code of the endpoint - defaults to 'compiled'.)
+    # - :format ('url' or 'json' specifies how the endpoint is returned - default is 'json' which returns a Base64 encoded data string.)
+    # - :datasets (used for infocards - defaults to empty)
+    # - :env ('dev' or 'prod' specifies whether to run the development or production version of the app - defaults to 'prod'.)
+    # - :image_url (a fully qualified url to the image that will be used for the infocard. It must be a 240x160 jpg - defaults to a cropped version of the app image in appBuilder.)
+    # - :runtime (specific runtime to be used. This only works with bookmarklets - defaults to init.kobj.net/js/shared/kobj-static.js )
     #
     # Returns a hash formatted as follows:
     # {:data => "endpoint as specified in the :format option",
