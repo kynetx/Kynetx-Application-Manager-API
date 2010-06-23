@@ -62,7 +62,7 @@ module KynetxAmApi
     # - :offset => Start in list (not implemented)
     # - :size => Number of application to list (not implemented)
     #
-    # Returns a has with two keys
+    # Returns a Hash with two keys
     # - "apps" => Array Off Hashes with :appid , :role, :name, :created
     # - "valid" => true
     #
@@ -73,16 +73,14 @@ module KynetxAmApi
 
     #
     # - :application_id => application_id
-    # - :version => Version of application to obtain
     #
     def find_application(options = {})
-      options[:version] ||= "development"
       raise "Expecting :application_id" unless options[:application_id]
       
       if @current_application && @current_application.application_id != options[:application_id]
-        @current_application = KynetxAmApi::Application.new(self, options[:application_id], options[:version])
+        @current_application = KynetxAmApi::Application.new(self, options[:application_id])
       else
-        @current_application ||= KynetxAmApi::Application.new(self, options[:application_id], options[:version])
+        @current_application ||= KynetxAmApi::Application.new(self, options[:application_id])
       end
       return @current_application
     end

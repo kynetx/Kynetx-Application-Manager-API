@@ -6,7 +6,8 @@ module KynetxAmApi
     attr_reader :application_id
     attr_reader :api
 
-    def initialize(user, application_id, version=nil)
+    # constructor takes a KynextAmApi::User object and an application id (ruleset_id)
+    def initialize(user, application_id)
       @api = user.api
       @application_id = application_id
       @user = user
@@ -154,15 +155,74 @@ module KynetxAmApi
       return @api.post_app_generate(@application_id, "info_card", options)
     end
     
-    def extension(type, name, author, description)
+    def extension(type, name, author, description, format="json")
       options = {
         "extname" => name,
         "extdesc" => description,
-        "extauthor" => author.to_s.empty? ? @user.name : author
+        "extauthor" => author.to_s.empty? ? @user.name : author,
+        "format" => format
       }
       options["appguid"] = @guid if type.to_s == "ie"
       return @api.post_app_generate(@application_id, type.to_s, options)
       
+    end
+
+    # Returns an endpoint
+    #
+    # type is a String or Symbol of one of the following:
+    #   :chrome
+    #   :ie
+    #   :firefox
+    #   :info_card
+    #   :bookmarklet
+    #   :sitetags
+    #    
+    # opts is a Hash of options that has the following keys:
+    # (see Kynetx App Management API documentation on "generate" for more information)
+    #
+    # :extname (endpoint name - defaults to app name.)
+    # :extauthor (endpoint author - defaults to user generating the endpoint.) 
+    # :extdesc (endpoint description - defaults to empty.)
+    # :force_build ('Y' or 'N' force a regeneration of the endpoint - defaults to 'N'.)
+    # :contents ( 'compiled' or 'src' specifies whether you want the endpoint or the source code of the endpoint - defaults to 'compiled'.)
+    # :format ('url' or 'json' specifies how the endpoint is returned - default is 'json' which returns a Base64 encoded data string.)
+    # :datasets (used for infocards - defaults to empty)
+    # :env ('dev' or 'prod' specifies whether to run the development or production version of the app - defaults to 'prod'.)
+    # :image_url (a fully qualified url to the image that will be used for the infocard. It must be a 240x160 jpg - defaults to a cropped version of the app image in appBuilder.)
+    # :runtime (specific runtime to be used. This only works with bookmarklets - defaults to init.kobj.net/js/shared/kobj-static.js )
+    #
+    # Returns a hash formatted as follows:
+    # {:data => "endpoint as specified in the :format option",
+    #  :file_name => "filename.*",
+    #  :content_type => 'content type',
+    #  :errors => []
+    # }
+    def endpoint(type, opts={})
+      options = {
+        :extname => @name,
+        :extdesc => "",
+        :extauthor => @user.name,
+        :force_build => 'N',
+        :contents => "compiled",
+        :format => 'json',
+        :env => 'prod'
+      }  
+
+      # Set type specific options
+      case type.to_s
+      when 'bookmarklet'
+        options[:runtime] = "init.kobj.net/js/shared/kobj-static.js"
+      when 'info_card'
+        options[:image_url] = image_url('icard')
+        options[:datasets] = ""
+      when 'ie'
+        options[:appguid] = @guid
+      end
+
+      options.merge!(opts)
+      puts "ENDPOINT PARAMS: (#{type}): #{options.inspect}" if $DEBUG
+      return @api.post_app_generate(@application_id, type.to_s, options)
+
     end
     
     private
@@ -217,6 +277,7 @@ module KynetxAmApi
         reload
         return true
       else
+        puts "ERROR SAVING KRL: #{response.inspect}" if $DEBUG
         raise response["error"]
       end
     end
