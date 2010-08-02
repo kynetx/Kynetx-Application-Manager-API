@@ -11,7 +11,7 @@ DEFAULT_META = <<-KRL
       <<DESCRIPTION>>
     >>
     author ""
-    // Uncomment this line to require Markeplace purchase to use this app.
+    // Uncomment this line to require Marketplace purchase to use this app.
     // authz require user
     logging off
   }
@@ -26,14 +26,14 @@ KRL
 DEFAULT_DISPATCH = <<-KRL
   dispatch {
     // Some example dispatch domains
-    // domain "exmple.com"
+    // domain "example.com"
     // domain "other.example.com"
   }
 KRL
 
 DEFAULT_RULE = <<-KRL
   rule <<NAME>> is active {
-    select when pageview "" setting ()
+    select when pageview ".*" setting ()
     // pre {   }
     // notify("Hello World", "This is a sample rule.");
     noop();
