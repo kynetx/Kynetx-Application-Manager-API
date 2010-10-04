@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/kynetx_am_api/direct_api.rb'
 require File.dirname(__FILE__) + '/kynetx_am_api/oauth.rb'
 require File.dirname(__FILE__) + '/kynetx_am_api/user.rb'
 require File.dirname(__FILE__) + '/kynetx_am_api/application.rb'
+require File.dirname(__FILE__) + '/kynetx_am_api/krl_parse_error.rb'
 
 
 DEFAULT_META = <<-KRL
