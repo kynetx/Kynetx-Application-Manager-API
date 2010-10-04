@@ -278,7 +278,7 @@ module KynetxAmApi
         return true
       else
         puts "ERROR SAVING KRL: #{response.inspect}" if $DEBUG
-        raise KRLParseError "Unable to parse the KRL", response["error"]
+        raise KRLParseError.new "Unable to parse the KRL", response["error"]
       end
     end
   
