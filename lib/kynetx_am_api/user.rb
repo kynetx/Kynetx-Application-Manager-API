@@ -102,6 +102,7 @@ module KynetxAmApi
     
     def owns_current?
       return false unless @current_application
+      return false unless @current_application.owner
       return @current_application.owner["kynetxuserid"].to_i == self.userid.to_i
     end
     
@@ -116,6 +117,18 @@ module KynetxAmApi
         :userid => @userid,
         :username => @username
       }
+    end
+
+    def kpis(rulesets=[], range=nil)
+      conditions = rulesets.empty? ? nil : []
+      rulesets.each do |ruleset|
+        conditions.push << {:field => "ruleset", :value => ruleset}
+      end
+      return api.get_stats_query("rse,brse,rules,rules_fired,actions,callbacks", 'ruleset,day', conditions, range)
+    end
+
+    def stats_interface
+      return api.get_stats_interface
     end
 
 

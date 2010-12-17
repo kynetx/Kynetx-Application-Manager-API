@@ -4,8 +4,7 @@ module KynetxAmApi
   require 'json'
   require 'net/http/post/multipart'
 
-  class DirectApi
-
+  class DirectApi 
     attr_accessor :oauth
 
     #
@@ -158,6 +157,31 @@ module KynetxAmApi
       return user
     end
 
+    def get_app_stats_kpis(application_id, range)
+      return get_response("app/#{application_id}/stats/kpis/#{range}", :json)
+    end
+
+    def get_stats_query(k,d,c=nil,r=nil)
+      q_params = QueryParams.new.merge({:k => k, :d => d})
+      if c 
+        # c are the conditions and they are supplied like so:
+        # [ {:field => "fieldname", :value => "value"}, ...]
+        c.each do |condition|
+          q_params["where_#{condition[:field]}".to_sym] = condition[:value]
+        end
+      end
+      q_params[:r] = r if r
+      return get_response("stats/query" + q_params.to_params, :json)
+    end
+
+    def get_stats_interface
+      return get_response("stats/interface", :json)
+    end
+
+    def get_stats_logging(application_id, range)
+      return get_response("app/#{application_id}/stats/logging/#{range}", :json)
+    end
+
     private
 
     def get_response(api_method, format = nil)
@@ -206,5 +230,15 @@ module KynetxAmApi
     end
  
     
+  end
+
+
+  class QueryParams < Hash
+    def to_params
+      return "" if self.empty?
+      p = "?"
+      self.each {|k,v| p += "#{CGI::escape k.to_s}=#{CGI::escape v.to_s}&"}
+      return p.chop
+    end
   end
 end

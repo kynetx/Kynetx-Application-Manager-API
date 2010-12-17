@@ -135,6 +135,23 @@ module KynetxAmApi
       load_base
       load_versions
     end
+
+    #----- Stats Methods
+    
+    def kpis(range="previous_day")
+      return @api.get_app_stats_kpis(@application_id, range)
+    end
+
+    def stats(k,d,c=nil,r=nil)
+      # Accept kpis and dims as a String or Array
+      kpis = k.class == Array ? k.split(",") : k
+      dims = d.class == Array ? d.split(",") : d
+      return @api.get_stats_query(kpis,dims,c,r)
+    end
+
+    def logging(range="previous_day")
+      return @api.get_stats_logging(@application_id, range)
+    end
     
     #----- Distrubution Methods
     
