@@ -89,7 +89,7 @@ module KynetxAmApi
     def create_application(name, description="")
       response = api.get_appcreate
 
-      raise "Error from API: #{response["error"]}"
+      raise "Error from API: #{response["error"]}" if not response["valid"]
 
       appid = response["appid"]
       @current_application = KynetxAmApi::Application.new(self, appid).create_initial_app(name, description)
