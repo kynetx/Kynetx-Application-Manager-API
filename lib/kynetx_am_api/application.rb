@@ -250,8 +250,12 @@ module KynetxAmApi
     end
     
     def load_base
-      app_details = @api.get_app_details(@application_id)
-      puts "APPDETAILS: #{app_details.inspect}" if $DEBUG
+      if @application_id
+        app_details = @api.get_app_details(@application_id)
+        puts "APPDETAILS: #{app_details.inspect}" if $DEBUG
+      else
+        raise "No app created"
+      end
       if app_details["error"]
         raise app_details["error"]
       end
